@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+
+  <h1>index du controleur principal qui a un path 'app_home'</h1>
+
+  {# Depuis la méthode verifyUserEmail de RegistrationController, je chope le message de succès. #}
+  {% for message in app.flashes('success') %}
+      <div class="alert alert-danger" role="alert">{{ message }}</div>
+  {% endfor %}
+
+{% endblock %}
