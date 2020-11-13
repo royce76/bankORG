@@ -15,15 +15,22 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    <div class="mt-5">
+        <div class="alert alert-info">
+            Pas encore de compte : <a href="{{ path('app_register') }}" class="btn btn-dark mx-2">S'enregistrer</a>
+        </div>
+    </div>  
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <div class="my-5">
+        <label for="inputEmail">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+        <label for="inputPassword">Mot de passe</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" required>
 
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
+    </div>   
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html
@@ -35,8 +42,7 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-dark my-3" type="submit">
-        Se connecter
-    </button>
+    <button class="btn btn-lg btn-dark my-3" type="submit">Se connecter</button>
+    <p><small>Mot de passe oublié <a href="{{ path('app_forgot_password_request') }}">cliquez ici</a></small></p>
 </form>
 {% endblock %}
