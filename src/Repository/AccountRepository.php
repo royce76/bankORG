@@ -19,6 +19,19 @@ class AccountRepository extends ServiceEntityRepository
         parent::__construct($registry, Account::class);
     }
 
+    /**
+     * @return Account[]
+     */
+    public function getAccountLastOperation($user_id):array
+    {
+      $qb = $this->createQueryBuilder('a')
+          ->where('a.user = :id')
+          ->setParameter('id', $user_id);
+
+      $query = $qb->getQuery();
+      return $query->execute();
+    }
+
     // /**
     //  * @return Account[] Returns an array of Account objects
     //  */
