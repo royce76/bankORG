@@ -8,7 +8,7 @@
 
   {# Depuis la méthode verifyUserEmail de RegistrationController, je chope le message de succès. #}
   {% for message in app.flashes('success') %}
-      <div class="alert alert-danger" role="alert">{{ message }}</div>
+      <div class="alert alert-success" role="alert">{{ message }}</div>
   {% endfor %}
 
 {% endblock %}
