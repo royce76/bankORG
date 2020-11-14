@@ -83,9 +83,15 @@ class User implements UserInterface
      */
     private $accounts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Operation::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $operations;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
+        $this->operations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -286,6 +292,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($account->getUser() === $this) {
                 $account->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Operation[]
+     */
+    public function getOperations(): Collection
+    {
+        return $this->operations;
+    }
+
+    public function addOperation(Operation $operation): self
+    {
+        if (!$this->operations->contains($operation)) {
+            $this->operations[] = $operation;
+            $operation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOperation(Operation $operation): self
+    {
+        if ($this->operations->removeElement($operation)) {
+            // set the owning side to null (unless already changed)
+            if ($operation->getUser() === $this) {
+                $operation->setUser(null);
             }
         }
 
