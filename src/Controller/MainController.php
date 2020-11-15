@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Operation;
 use App\Repository\OperationRepository;
 use App\Entity\Account;
+use App\Form\AccountType;
 use App\Repository\AccountRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class MainController extends AbstractController
 {
@@ -43,5 +46,49 @@ class MainController extends AbstractController
             'operations' => $operations,
         ]);
 
+    }
+
+    
+    /**
+     * @Route("/account/new", name="app_account_new")
+     */
+    public function new_account(Request $request,  ValidatorInterface $validator): Response
+    {
+        $account = new Account();
+        $form = $this->createForm(AccountType::class,$account);
+        $errors = null;
+        $user = $this->getUser();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $account->setOpeningDate(new \DateTime());
+            $account->setUser($user);
+
+            $errors = $validator->validate($account);
+            if(count($errors) === 0) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($account);
+                $entityManager->flush();
+                
+                $this->addFlash(
+                    'success',
+                    'Compte créé.'
+                );
+
+                return $this->redirectToRoute('app_home');
+            }
+            else {
+                $this->addFlash(
+                    'danger',
+                    'Cet compte n\'a pu être créé !'
+                );
+            }
+        }
+        
+        return $this->render('main/account_new.html.twig', [
+            'accountForm' => $form->createView(),
+            'errors' => $errors,
+        ]);
     }
 }
