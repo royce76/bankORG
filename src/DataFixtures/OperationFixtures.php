@@ -14,10 +14,10 @@ class OperationFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach (AccountFixtures::TOTO_ACCOUNT_REFERENCE as $value) {
-          for ($i=0; $i < 2; $i++) {
+          for ($i=1; $i < 4; $i++) {
             $operation = new Operation();
             $operation->setOperationType('Opération n° '. $i);
-            $operation->setAmount(20);
+            $operation->setAmount(20+$i);
             $operation->setComments('Justificatif n°' . $i);
             $operation->setDateTransaction(new \DateTime);
 
