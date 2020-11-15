@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Account;
-use App\Repository\AccountRepository;
+use App\Entity\Operation;
+use App\Repository\OperationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,14 +21,10 @@ class MainController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         else {
-          $accounts = $this->getDoctrine()->getRepository(Account::class)->getAccountLastOperation($user->getId());
-          foreach ($accounts as $account) {
-            $operations = $account->getOperations();
-          }
-
+          $operations = $this->getDoctrine()->getRepository(Operation::class)->getAccountLastOperation($user->getId());
 
           return $this->render('main/index.html.twig', [
-              'controller_name' => 'MainController',
+              'operations' => $operations,
           ]);
         }
 

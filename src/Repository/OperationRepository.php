@@ -19,6 +19,21 @@ class OperationRepository extends ServiceEntityRepository
         parent::__construct($registry, Operation::class);
     }
 
+    /**
+     * @return Operation[]
+     */
+    public function getAccountLastOperation($user_id):array
+    {
+      $qb = $this->createQueryBuilder('o')
+          ->where('o.user = :id')
+          ->groupBy('o.account')
+          ->orderBy('o.account', 'DESC')
+          ->setParameter('id', $user_id);
+
+      $query = $qb->getQuery();
+      return $query->execute();
+    }
+
     // /**
     //  * @return Operation[] Returns an array of Operation objects
     //  */
