@@ -19,6 +19,7 @@ class OperationRepository extends ServiceEntityRepository
         parent::__construct($registry, Operation::class);
     }
 
+    //fonction appelé à homepage
     /**
      * @return Operation[]
      */
@@ -34,32 +35,20 @@ class OperationRepository extends ServiceEntityRepository
       return $query->execute();
     }
 
-    // /**
-    //  * @return Operation[] Returns an array of Operation objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    //fonction appelé avec le paramètre id du compte sélectionner à homepage
+    /**
+     * @return Operation[]
+     */
+    public function getAccountAndOperations($account_id):array
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+      $qb = $this->createQueryBuilder('o')
+          ->where('o.account = :id')
+          ->orderBy('o.id', 'DESC')
+          ->setParameter('id', $account_id);
 
-    /*
-    public function findOneBySomeField($value): ?Operation
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+      $query = $qb->getQuery();
+      return $query->execute();
     }
-    */
+
+
 }
