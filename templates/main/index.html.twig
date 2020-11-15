@@ -16,12 +16,12 @@
           <h5 class="card-title">{{ operation.account.AccountType }}</h5>
         </div>
         <ul class="list-group list-group-flush">
-        <li class="list-group-item">Ouvert le {{ operation.account.OpeningDate|date('m/d/Y') }}</li>
-        <li class="list-group-item">Solde actuelle : {{ operation.account.Balance }} euro</li>
+          <li class="list-group-item">Ouvert le {{ operation.account.OpeningDate|date('m/d/Y') }}</li>
+          <li class="list-group-item">Solde actuelle : {{ operation.account.Balance }} euro</li>
         </ul>
         <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+          <a href="{{ path('app_account', {id:operation.account.id})}}" class="card-link">Gérer</a>
+          <a href="#" class="card-link">Another link</a>
         </div>
       </div>
       <table class="table col-5 mx-auto my-4 text-center">
