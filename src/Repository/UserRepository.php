@@ -36,7 +36,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    //Perso je n'utilise pas ces méthodes suivantes sur la manière qu'elles sont écrites et proposés par symfony
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
