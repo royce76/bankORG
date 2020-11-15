@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -75,6 +77,22 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Account::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $accounts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Operation::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $operations;
+
+    public function __construct()
+    {
+        $this->accounts = new ArrayCollection();
+        $this->operations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -246,6 +264,66 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Account[]
+     */
+    public function getAccounts(): Collection
+    {
+        return $this->accounts;
+    }
+
+    public function addAccount(Account $account): self
+    {
+        if (!$this->accounts->contains($account)) {
+            $this->accounts[] = $account;
+            $account->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccount(Account $account): self
+    {
+        if ($this->accounts->removeElement($account)) {
+            // set the owning side to null (unless already changed)
+            if ($account->getUser() === $this) {
+                $account->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Operation[]
+     */
+    public function getOperations(): Collection
+    {
+        return $this->operations;
+    }
+
+    public function addOperation(Operation $operation): self
+    {
+        if (!$this->operations->contains($operation)) {
+            $this->operations[] = $operation;
+            $operation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOperation(Operation $operation): self
+    {
+        if ($this->operations->removeElement($operation)) {
+            // set the owning side to null (unless already changed)
+            if ($operation->getUser() === $this) {
+                $operation->setUser(null);
+            }
+        }
 
         return $this;
     }

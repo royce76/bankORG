@@ -4,11 +4,45 @@
 
 {% block content %}
 
-  <h1>index du controleur principal qui a un path 'app_home'</h1>
-
   {# Depuis la méthode verifyUserEmail de RegistrationController, je chope le message de succès. #}
   {% for message in app.flashes('success') %}
       <div class="alert alert-success" role="alert">{{ message }}</div>
+  {% endfor %}
+
+  {% for operation in operations %}
+    <div class="row">
+      <div class="card col-5 mx-auto my-4" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ operation.account.AccountType }}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">Ouvert le {{ operation.account.OpeningDate|date('m/d/Y') }}</li>
+        <li class="list-group-item">Solde actuelle : {{ operation.account.Balance }} euro</li>
+        </ul>
+        <div class="card-body">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+        </div>
+      </div>
+      <table class="table col-5 mx-auto my-4 text-center">
+        <thead>
+          <tr>
+            <th scope="col">Date de transaction</th>
+            <th scope="col">Type d'opération</th>
+            <th scope="col">Justificatif</th>
+            <th scope="col">Montant (euro)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{ operation.DateTransaction|date('m/d/Y') }}</th>
+            <td>{{ operation.OperationType }}</td>
+            <td>{{ operation.Comments }}</td>
+            <td>{{ operation.Amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   {% endfor %}
 
 {% endblock %}
