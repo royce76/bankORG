@@ -70,7 +70,6 @@ class MainController extends AbstractController
             if(count($errors) === 0) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($account);
-                $entityManager->flush();
 
                 $operation->setOperationType('Crédit');
                 $operation->setDateTransaction(new \DateTime());
