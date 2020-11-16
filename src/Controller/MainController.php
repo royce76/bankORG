@@ -6,6 +6,7 @@ use App\Entity\Operation;
 use App\Repository\OperationRepository;
 use App\Entity\Account;
 use App\Form\AccountType;
+use App\Form\MouvementType;
 use App\Repository\AccountRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,7 @@ class MainController extends AbstractController
 
     }
 
-    
+
     /**
      * @Route("/account/new", name="app_account_new")
      */
@@ -70,7 +71,7 @@ class MainController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($account);
                 $entityManager->flush();
-                
+
                 $this->addFlash(
                     'success',
                     'Compte créé.'
@@ -85,10 +86,44 @@ class MainController extends AbstractController
                 );
             }
         }
-        
+
         return $this->render('main/account_new.html.twig', [
             'accountForm' => $form->createView(),
             'errors' => $errors,
         ]);
     }
+
+    /**
+     * @Route("/mouvement", name="app_mouvement")
+     */
+     public function mouvement(Request $request, ValidatorInterface $validator): Response
+     {
+        $errors = null;
+       // creates a task object and initializes some data for this example
+        $operation = new Operation();
+        $form = $this->createForm(MouvementType::class, $operation);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+          $operation->setUser($this->getUser());
+          $operation->setDateTransaction(new \DateTime('now'));
+          $operation->setAccount($this->);
+          $errors = $validator->validate($operation);
+
+          if(count($errors) === 0) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $operation = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($operation);
+            $entityManager->flush();
+          }
+
+          return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('main/mouvement.html.twig', [
+            'form' => $form->createView(),
+        ]);
+     }
 }
