@@ -107,7 +107,6 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
           $operation->setUser($this->getUser());
           $operation->setDateTransaction(new \DateTime('now'));
-          $operation->setAccount($this->);
           $errors = $validator->validate($operation);
 
           if(count($errors) === 0) {
