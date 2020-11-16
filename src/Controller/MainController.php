@@ -27,7 +27,7 @@ class MainController extends AbstractController
         }
         else {
           $operations = $this->getDoctrine()->getRepository(Operation::class)->getAccountLastOperation($user->getId());
-
+ 
           return $this->render('main/index.html.twig', [
               'operations' => $operations,
           ]);
@@ -55,6 +55,7 @@ class MainController extends AbstractController
     public function new_account(Request $request,  ValidatorInterface $validator): Response
     {
         $account = new Account();
+        $operation = new Operation();
         $form = $this->createForm(AccountType::class,$account);
         $errors = null;
         $user = $this->getUser();
@@ -64,11 +65,22 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $account->setOpeningDate(new \DateTime());
             $account->setUser($user);
-
+            
             $errors = $validator->validate($account);
             if(count($errors) === 0) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($account);
+                $entityManager->flush();
+
+                $operation->setOperationType('Crédit');
+                $operation->setDateTransaction(new \DateTime());
+                $operation->setComments('Dépôt initial');
+                $operation->setUser($user);
+                $operation->setAccount($account);
+                $operation->setAmount($account->getBalance());
+    
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($operation);
                 $entityManager->flush();
                 
                 $this->addFlash(
