@@ -46,13 +46,18 @@ class MouvementType extends AbstractType
               'multiple' => false,
           ];
 
-
         $builder
-            ->add('operation_type')
+            ->add('account', EntityType::class, $formOptions)
+            ->add('operation_type', ChoiceType::class, [
+                'choices' => [
+                  'Choisissez' => null,
+                  'Débit' => 'Débit',
+                  'Crédit' => 'Crédit',
+                ],
+            ])
             ->add('amount')
             ->add('comments')
             ->add('submit', SubmitType::class)
-            ->add('account', EntityType::class, $formOptions);
         ;
     }
 
