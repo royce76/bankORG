@@ -28,7 +28,7 @@ class MainController extends AbstractController
         }
         else {
           $operations = $this->getDoctrine()->getRepository(Operation::class)->getAccountLastOperation($user->getId());
- 
+
           return $this->render('main/index.html.twig', [
               'operations' => $operations,
           ]);
@@ -66,7 +66,7 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $account->setOpeningDate(new \DateTime());
             $account->setUser($user);
-            
+
             $errors = $validator->validate($account);
             if(count($errors) === 0) {
                 $entityManager = $this->getDoctrine()->getManager();
@@ -78,7 +78,7 @@ class MainController extends AbstractController
                 $operation->setUser($user);
                 $operation->setAccount($account);
                 $operation->setAmount($account->getBalance());
-    
+
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($operation);
                 $entityManager->flush();
@@ -122,13 +122,27 @@ class MainController extends AbstractController
 
           if(count($errors) === 0) {
             // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
+            // but, the original `$operation` variable has also been updated
             $operation = $form->getData();
+            //on récupère le compte
+            $account = $operation->getAccount();
+            $balance = $account->getBalance();
+            $amount = $operation->getAmount();
+
+            if ($operation->getOperationType() === 'Débit') {
+              //on additionne et la mise à jour du solde
+              $amount = (-1) * $amount;
+            }
+            else {
+              $amount;
+            }
+            $account->setBalance($balance + $amount);
+            $operation->setAmount($amount);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($operation);
+            $entityManager->persist($account);
             $entityManager->flush();
           }
-
           return $this->redirectToRoute('app_home');
         }
 
