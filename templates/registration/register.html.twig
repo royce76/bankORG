@@ -11,7 +11,7 @@
         <h1>S'inscrire</h1>
     </div>
     <div class="container">
-        {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
             {{ form_row(registrationForm.lastname, {
                 label: 'Nom'
             }) }}
@@ -33,8 +33,6 @@
             {{ form_row(registrationForm.birthdate, {
                 label: 'Date de naissance'
             }) }}
-
-
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.plainPassword, {
                 label: 'Mot de passe'

@@ -42,9 +42,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank (
-     *      message = "Champs vide"
-     * )
      */
     private $password;
 
@@ -91,7 +88,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=1)
      * @Assert\Choice(
-     *     choices = { "Masculin", "Feminin" },
+     *     choices = { "M", "F" },
      *     message = "Choisir un genre."
      * )
      * @Assert\NotBlank (
