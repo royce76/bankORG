@@ -135,10 +135,13 @@ class MainController extends AbstractController
           else {
             $amount;
           }
+
+          //on additionne et la mise à jour du solde
+          $account->setBalance($balance + $amount);
+          $operation->setAmount($amount);
+
+          //Si il n'y pas d'erreurs.
           if(count($errors) === 0) {
-            //on additionne et la mise à jour du solde
-            $account->setBalance($balance + $amount);
-            $operation->setAmount($amount);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($operation);
             $entityManager->persist($account);
