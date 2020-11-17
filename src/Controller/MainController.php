@@ -82,7 +82,6 @@ class MainController extends AbstractController
                 $operation->setAccount($account);
                 $operation->setAmount($account->getBalance());
 
-                // $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($operation);
                 $entityManager->flush();
 

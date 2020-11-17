@@ -25,6 +25,7 @@ class Account
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
+     * @Assert\Choice(callback="getAccountGenre", message = "Compte non reconnu")
      */
     private $account_type;
 
@@ -52,6 +53,7 @@ class Account
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="accounts")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
      */
     private $user;
 
@@ -150,5 +152,10 @@ class Account
         }
 
         return $this;
+    }
+
+    public static function getAccountGenre()
+    {
+        return ['Compte courant', 'PEL', 'Compte jeune', 'Livret A', 'LDDS'];
     }
 }

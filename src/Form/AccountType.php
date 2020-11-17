@@ -23,14 +23,13 @@ class AccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $available_account = $this->getAvailableAccountTypes();
-        
+
         $builder
             ->add('account_type', ChoiceType::class, array(
                 'choices' => $available_account,
                 'choice_label' => function ($value) {
                     return $value;
                     },
-                'required' => true,
             ))
             ->add('balance')
             ->add('save', SubmitType::class)
