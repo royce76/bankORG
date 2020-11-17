@@ -52,6 +52,7 @@ class Operation
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     private $date_transaction;
 
@@ -61,6 +62,7 @@ class Operation
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
+     * @Assert\Valid
      */
     private $account;
 

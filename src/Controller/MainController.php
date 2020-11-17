@@ -130,36 +130,21 @@ class MainController extends AbstractController
           $amount = $operation->getAmount();
 
           if ($operation->getOperationType() === 'Débit') {
-              if ($balance > $amount) {
-                $amount = (-1) * $amount;
-                if(count($errors) === 0) {
-                  //on additionne et la mise à jour du solde
-                  $account->setBalance($balance + $amount);
-                  $operation->setAmount($amount);
-                  $entityManager = $this->getDoctrine()->getManager();
-                  $entityManager->persist($operation);
-                  $entityManager->persist($account);
-                  $entityManager->flush();
-                  return $this->redirectToRoute('app_home');
-                }
-              }
-              else {
-                $this->addFlash('danger', 'Montant insuffisant!');
-              }
+            $amount = (-1) * $amount;
           }
           else {
             $amount;
-            if(count($errors) === 0) {
-              //on additionne et la mise à jour du solde
-              $account->setBalance($balance + $amount);
-              $operation->setAmount($amount);
-              $entityManager = $this->getDoctrine()->getManager();
-              $entityManager->persist($operation);
-              $entityManager->persist($account);
-              $entityManager->flush();
-              return $this->redirectToRoute('app_home');
-            }
           }
+          if(count($errors) === 0) {
+            //on additionne et la mise à jour du solde
+            $account->setBalance($balance + $amount);
+            $operation->setAmount($amount);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($operation);
+            $entityManager->persist($account);
+            $entityManager->flush();
+          }
+          return $this->redirectToRoute('app_home');
         }
 
         return $this->render('main/mouvement.html.twig', [
