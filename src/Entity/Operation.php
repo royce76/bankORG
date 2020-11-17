@@ -23,6 +23,10 @@ class Operation
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
+     * @Assert\Choice(
+     *     choices = {'Débit', 'Crédit'},
+     *     message = "Choisir un type d'opération."
+     * )
      */
     private $operation_type;
 
@@ -52,7 +56,7 @@ class Operation
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\GreaterThanOrEqual("today UTC")
+     * @Assert\LessThanOrEqual("today UTC")
      */
     private $date_transaction;
 
@@ -69,6 +73,8 @@ class Operation
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="operations")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
+     */
      */
     private $user;
 

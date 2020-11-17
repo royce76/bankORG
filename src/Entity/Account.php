@@ -25,6 +25,10 @@ class Account
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
+     * @Assert\Choice(
+     *     choices = { 'Compte courant', 'PEL', 'Compte jeune', 'Livret A', 'LDDS' },
+     *     message = "Choisir un compte."
+     * )
      */
     private $account_type;
 
