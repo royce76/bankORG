@@ -34,6 +34,7 @@ class MouvementType extends AbstractType
     {
         $formOptions = [
               'class' => Account::class,
+              'invalid_message' => 'Symfony is too smart for your hacking!',
               'placeholder' => 'Choisissez',
               'choice_label' => 'account_type',
               'choice_value' => 'account_type',
@@ -48,6 +49,7 @@ class MouvementType extends AbstractType
         $builder
             ->add('account', EntityType::class, $formOptions)
             ->add('operation_type', ChoiceType::class, [
+                'invalid_message' => 'Symfony is too smart for your hacking!',
                 'choices' => [
                   'Choisissez' => null,
                   'Débit' => 'Débit',

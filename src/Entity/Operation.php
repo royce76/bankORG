@@ -29,11 +29,15 @@ class Operation
     /**
      * @ORM\Column(type="float")
      * @Assert\Regex(
-     *      pattern = "/^([0-9]+([.][0-9]*)?|[.][0-9]+)$/",
+     *      pattern = "/^[0-9]+(\.[0-9]{1,2})?$/",
      *      message = "Exemple de montant : 59.6 ou 1654,45"
      * )
      * @Assert\NotBlank (
      *      message = "Champs vide"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *      value = 20,
+     *      message = "Montant minimum de 20 euro"
      * )
      */
     private $amount;
