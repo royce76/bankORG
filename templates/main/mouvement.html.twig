@@ -1,0 +1,31 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Ouvrir un compte{% endblock %}
+
+{% block content %}
+
+  {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <div class="">
+        <div class="">
+            {{ form_row(form.account) }}
+        </div>
+        <div class="">
+            {{ form_row(form.operation_type) }}
+        </div>
+        <div class="">
+            {{ form_row(form.amount) }}
+        </div>
+        <div class="">
+            {{ form_row(form.comments) }}
+        </div>
+        <div class="">
+          {{ form_row(form.submit, {
+            'label': 'Enregistrer'
+          }) }}
+        </div>
+    </div>
+  {{ form_end(form) }}
+{% endblock %}
