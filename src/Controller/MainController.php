@@ -110,8 +110,7 @@ class MainController extends AbstractController
      public function mouvement(Request $request, ValidatorInterface $validator): Response
      {
         $errors = [];
-        $balance_error = "";
-       // creates a task object and initializes some data for this example
+       // creates a operation object and initializes some data for this example
         $operation = new Operation();
         $form = $this->createForm(MouvementType::class, $operation);
 
@@ -120,43 +119,52 @@ class MainController extends AbstractController
           $operation->setUser($this->getUser());
           $operation->setDateTransaction(new \DateTime('now'));
           $errors = $validator->validate($operation);
+
+          // $form->getData() holds the submitted values
+          // but, the original `$operation` variable has also been updated
+          $operation = $form->getData();
+
           //on récupère l'objet compte
           $account = $operation->getAccount();
+          $balance = $account->getBalance();
+          $amount = $operation->getAmount();
 
-          if(count($errors) === 0) {
-            // $form->getData() holds the submitted values
-            // but, the original `$operation` variable has also been updated
-            $operation = $form->getData();
-            $balance = $account->getBalance();
-            $amount = $operation->getAmount();
-
-            if ($operation->getOperationType() === 'Débit') {
-                if ($balance > $amount) {
-                  $amount = (-1) * $amount;
+          if ($operation->getOperationType() === 'Débit') {
+              if ($balance > $amount) {
+                $amount = (-1) * $amount;
+                if(count($errors) === 0) {
+                  //on additionne et la mise à jour du solde
+                  $account->setBalance($balance + $amount);
+                  $operation->setAmount($amount);
+                  $entityManager = $this->getDoctrine()->getManager();
+                  $entityManager->persist($operation);
+                  $entityManager->persist($account);
+                  $entityManager->flush();
+                  return $this->redirectToRoute('app_home');
                 }
-                else {
-                  $balance_error = 'pas assez de sous';
-                }
-            }
-            elseif ($operation->getOperationType() === 'Crédit') {
-              $amount;
-            }
-
-            //on additionne et la mise à jour du solde
-            $account->setBalance($balance + $amount);
-            $operation->setAmount($amount);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($operation);
-            $entityManager->persist($account);
-            $entityManager->flush();
+              }
+              else {
+                $this->addFlash('danger', 'Montant insuffisant!');
+              }
           }
-          return $this->redirectToRoute('app_home');
+          else {
+            $amount;
+            if(count($errors) === 0) {
+              //on additionne et la mise à jour du solde
+              $account->setBalance($balance + $amount);
+              $operation->setAmount($amount);
+              $entityManager = $this->getDoctrine()->getManager();
+              $entityManager->persist($operation);
+              $entityManager->persist($account);
+              $entityManager->flush();
+              return $this->redirectToRoute('app_home');
+            }
+          }
         }
 
         return $this->render('main/mouvement.html.twig', [
             'form' => $form->createView(),
             'errors' => $errors,
-            'balance' => $balance_error,
         ]);
      }
 }
