@@ -1,6 +1,6 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Ce compte{% endblock %}
 
 {% block content %}
 
@@ -17,7 +17,7 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">Ouvert le {{ operations[0].account.OpeningDate|date('m/d/Y') }}</li>
-      <li class="list-group-item">Solde actuelle : {{ operations[0].account.Balance }} euro</li>
+      <li class="list-group-item">Solde actuel : {{ operations[0].account.Balance }} euro</li>
     </ul>
     <div class="card-body">
       <a href="{{ path('app_home') }}" class="card-link">Retour</a>

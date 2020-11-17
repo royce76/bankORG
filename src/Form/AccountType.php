@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Security;
 
 class AccountType extends AbstractType
 {
+    const BANK_ACCOUNTS = ['Compte courant', 'PEL', 'Compte jeune', 'Livret A', 'LDDS'];
     private $user;
 
     public function __construct(Security $security)
@@ -43,13 +44,12 @@ class AccountType extends AbstractType
     }
 
     private function getAvailableAccountTypes(): Array {
-        $bank_accounts = ['Compte courant', 'PEL', 'Compte jeune', 'Livret A', 'LDDS'];
         $user_accounts = $this->user->getAccounts();
         $user_accounts_types = [];
         foreach($user_accounts as $user_account) {
                 array_push($user_accounts_types, $user_account->getAccountType());
         }
-        $available_account = array_diff($bank_accounts, $user_accounts_types);
+        $available_account = array_diff(self::BANK_ACCOUNTS, $user_accounts_types);
         return $available_account;
     }
 }

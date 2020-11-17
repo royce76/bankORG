@@ -12,6 +12,11 @@
     </div>
     <div class="container">
         {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+            {% for error in errors %}
+            <div class="alert-danger">
+                {{ error.message }}
+            </div>
+            {% endif %}
             {{ form_row(registrationForm.lastname, {
                 label: 'Nom'
             }) }}

@@ -34,7 +34,7 @@ class Account
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
-     * @Assert\LessThanOrEqual("today UTC", message = "Votre date d'ouverture est incorrect")
+     * @Assert\LessThanOrEqual("today UTC", message = "Votre date d'ouverture est incorrecte")
      */
     private $opening_date;
 
@@ -86,6 +86,10 @@ class Account
 
     public function getOpeningDate(): ?\DateTimeInterface
     {
+        $date = new \DateTime('now');
+        $dateInterval = new \DateInterval('P2D');
+        $date->sub($dateInterval);
+        $this->opening_date = $date;
         return $this->opening_date;
     }
 
