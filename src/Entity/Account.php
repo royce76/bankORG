@@ -56,6 +56,8 @@ class Account
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="accounts")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
+     */
      */
     private $user;
 
