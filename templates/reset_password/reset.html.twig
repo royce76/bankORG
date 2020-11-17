@@ -3,10 +3,22 @@
 {% block title %}Nouveau mot de passe{% endblock %}
 
 {% block content %}
-    <h1>Demander un nouveau mot de passe</h1>
+    <div class="row my-4">
+      <div class="col-10 mx-auto">
+        <h2>Demander un nouveau mot de passe</h2>
+      </div>
+    </div>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-dark text-white">Envoyer le nouveau mot de passe</button>
-    {{ form_end(resetForm) }}
+    <div class="row my-4">
+      <div class="col-10 mx-auto">
+        {{ form_start(resetForm, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="my-4">
+              {{ form_row(resetForm.plainPassword) }}
+            </div>
+            <div class="my-4">
+              <button type="submit" class="btn btn-dark text-white">Envoyer le nouveau mot de passe</button>
+            </div>
+        {{ form_end(resetForm) }}
+      </div>
+    </div>
 {% endblock %}
