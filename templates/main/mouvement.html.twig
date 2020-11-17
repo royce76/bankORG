@@ -5,28 +5,51 @@
 {% block content %}
 
   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    <div class="my-custom-class-for-errors">
-        {{ form_errors(form) }}
-    </div>
-    <div class="">
-        <div class="">
-            {{ form_row(form.account) }}
+    {% for error in errors %}
+      <div class="alert-danger">
+        {{ error.message }}
+      </div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+      <div class="row">
+        <div class="alert alert-danger col-10 mx-auto text-center">
+          {{ message }}
         </div>
-        <div class="">
-            {{ form_row(form.operation_type) }}
+      </div>
+    {% endfor %}
+    <div class="row">
+      <div class="col-10 mx-auto">
+        <div class="my-4">
+            {{ form_row(form.account, {
+                label: 'Votre compte',
+                'attr': {'class': 'form-control'}
+            }) }}
         </div>
-        <div class="">
-            {{ form_row(form.amount) }}
+        <div class="my-4">
+            {{ form_row(form.operation_type, {
+                label: 'Débit ou Crédit',
+                'attr': {'class': 'form-control'}
+            }) }}
         </div>
-        <div class="">
-            {{ form_row(form.comments) }}
+        <div class="my-4">
+            {{ form_row(form.amount, {
+                label: 'Montant',
+                'attr': {'class': 'form-control'}
+            }) }}
         </div>
-        <div class="">
+        <div class="my-4">
+            {{ form_row(form.comments, {
+                label: 'Justificatif obligatoire',
+                'attr': {'class': 'form-control'}
+            }) }}
+        </div>
+        <div class="my-4">
           {{ form_row(form.submit, {
             'label': 'Enregistrer',
             'attr': {'class': 'btn btn-dark'}
           }) }}
         </div>
+      </div>
     </div>
   {{ form_end(form) }}
 {% endblock %}
