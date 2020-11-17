@@ -13,6 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+*
+* @IsGranted("ROLE_USER")
+*/
 
 class MainController extends AbstractController
 {
@@ -23,17 +29,11 @@ class MainController extends AbstractController
     {
         $user = $this->getUser();
 
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-        else {
-          $operations = $this->getDoctrine()->getRepository(Operation::class)->getAccountLastOperation($user->getId());
+        $operations = $this->getDoctrine()->getRepository(Operation::class)->getAccountLastOperation($user->getId());
 
-          return $this->render('main/index.html.twig', [
-              'operations' => $operations,
-          ]);
-        }
-
+        return $this->render('main/index.html.twig', [
+            'operations' => $operations,
+        ]);
     }
 
     /**
