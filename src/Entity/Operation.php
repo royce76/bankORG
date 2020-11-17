@@ -75,7 +75,6 @@ class Operation
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
      */
-     */
     private $user;
 
     public function getId(): ?int

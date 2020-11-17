@@ -58,7 +58,6 @@ class Account
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
      */
-     */
     private $user;
 
     /**
