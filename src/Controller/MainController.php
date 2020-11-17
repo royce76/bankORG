@@ -94,7 +94,7 @@ class MainController extends AbstractController
             else {
                 $this->addFlash(
                     'danger',
-                    'Cet compte n\'a pu être créé !'
+                    'Ce compte n\'a pu être créé !'
                 );
             }
         }

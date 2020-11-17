@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="Email could not be found.">
                 <source>Email could not be found.</source>
-                <target>Email non-trouvé</target>
+                <target>Adresse mail non-trouvée</target>
             </trans-unit>
         </body>
     </file>
