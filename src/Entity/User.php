@@ -50,6 +50,10 @@ class User implements UserInterface
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
+     * @Assert\Regex(
+     *     pattern="/(^[a-zA-ZÀ-ú\-\s])+/",
+     *     message="Saisie incorrect, exemple: Silverster"
+     * )
      */
     private $lastname;
 
@@ -58,13 +62,22 @@ class User implements UserInterface
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
+     * @Assert\Regex(
+     *     pattern="/(^[a-zA-ZÀ-ú\-\s])+/",
+     *     message="Saisie incorrect, exemple: Stallone"
+     * )
      */
     private $firstname;
+
 
     /**
      * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank (
      *      message = "Champs vide"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[[:alpha:]]([-' ]?[[:alpha:]])*$/",
+     *     message="Saisie incorrect, exemple:Maison-Alfort"
      * )
      */
     private $city;
@@ -74,6 +87,10 @@ class User implements UserInterface
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
+     * @Assert\Regex(
+     *     pattern="/(^[0-9a-zA-ZÀ-ú\-\s])+/",
+     *     message="Saisie incorrect, exemple: 76350"
+     * )
      */
     private $city_code;
 
@@ -81,6 +98,10 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank (
      *      message = "Champs vide"
+     * )
+     * @Assert\Regex(
+     *     pattern="/(^[0-9a-zA-ZÀ-ú\-\s])+/",
+     *     message="Saisie incorrect, exemple: 2 rue de Lisbonne"
      * )
      */
     private $adress;

@@ -13,7 +13,7 @@
         {% endfor %}
     </ul>
     {% endif %}
-    {{ form_start(accountForm) }}
+    {{ form_start(accountForm, {'attr': {'novalidate': 'novalidate'}}) }}
         {{ form_row(accountForm.account_type, {
             label: 'Type de compte',
             'attr': {'class': 'form-control'}
