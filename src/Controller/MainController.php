@@ -59,16 +59,18 @@ class MainController extends AbstractController
         $account = new Account();
         $operation = new Operation();
         $form = $this->createForm(AccountType::class,$account);
-        $errors = null;
+        $errors = [];
         $user = $this->getUser();
 
+        $account->setOpeningDate($account->getOpeningDate());
+        $account->setUser($user);
         $form->handleRequest($request);
-
+       
+        
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $account->setOpeningDate(new \DateTime());
-            $account->setUser($user);
-
-            $errors = $validator->validate($account);
+            $errors = $validator->validate($account->getOpeningDate());
+            $account = $form->getData();
             if(count($errors) === 0) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($account);
@@ -80,7 +82,7 @@ class MainController extends AbstractController
                 $operation->setAccount($account);
                 $operation->setAmount($account->getBalance());
 
-                $entityManager = $this->getDoctrine()->getManager();
+                // $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($operation);
                 $entityManager->flush();
 
