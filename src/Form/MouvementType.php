@@ -34,6 +34,7 @@ class MouvementType extends AbstractType
     {
         $formOptions = [
               'class' => Account::class,
+              'placeholder' => 'Choisissez',
               'choice_label' => 'account_type',
               'choice_value' => 'account_type',
               'choices' => $this->user->getAccounts(),
@@ -42,9 +43,7 @@ class MouvementType extends AbstractType
               //       ->where("a.user = :user")
               //       ->setParameter("user", $this->user);
               //   },
-              'expanded' => false,
-              'multiple' => false,
-          ];
+        ];
 
         $builder
             ->add('account', EntityType::class, $formOptions)
