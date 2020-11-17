@@ -27,8 +27,9 @@ class RegistrationFormType extends AbstractType
             ->add('adress')
             ->add('sex', ChoiceType::class, [
               'choices' => [
-                'Masculin' => 'h',
-                'Feminin' => 'f',
+                '--Choisir--' => null,
+                'Masculin' => 'M',
+                'Feminin' => 'F',
               ],
             ])
             ->add('birthdate', BirthdayType::class, [
@@ -48,11 +49,11 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Champs vide',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
