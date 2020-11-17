@@ -10,7 +10,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class AccountFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const TOTO_ACCOUNT_REFERENCE = ['Compte courant','PEL','Compte jeune'];
+    public const TOTO_ACCOUNT_REFERENCE = ['Compte courant', 'PEL', 'Compte jeune'];
 
     public function load(ObjectManager $manager)
     {

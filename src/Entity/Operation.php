@@ -23,10 +23,7 @@ class Operation
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
-     * @Assert\Choice(
-     *     choices = {'Débit', 'Crédit'},
-     *     message = "Choisir un type d'opération."
-     * )
+     * @Assert\Choice(callback="getOperationGenre", message = "Opération non reconnu")
      */
     private $operation_type;
 
@@ -152,5 +149,10 @@ class Operation
         $this->user = $user;
 
         return $this;
+    }
+
+    public static function getOperationGenre()
+    {
+        return ['Débit', 'Crédit'];
     }
 }
