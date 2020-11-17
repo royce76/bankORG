@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OperationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=OperationRepository::class)
@@ -19,27 +20,49 @@ class Operation
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $operation_type;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Regex(
+     *      pattern = "/^[0-9]+(\.[0-9]{1,2})?$/",
+     *      message = "Exemple de montant : 59.6 ou 1654,45"
+     * )
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *      value = 20,
+     *      message = "Montant minimum de 20 euro"
+     * )
      */
     private $amount;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $comments;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     private $date_transaction;
 
     /**
      * @ORM\ManyToOne(targetEntity=Account::class, inversedBy="operations")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
+     * @Assert\Valid
      */
     private $account;
 

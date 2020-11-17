@@ -6,6 +6,7 @@ use App\Repository\AccountRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AccountRepository::class)
@@ -21,16 +22,30 @@ class Account
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $account_type;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     private $opening_date;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
+     * @Assert\GreaterThan (
+     *      value = 0,
+     *      message = "Votre solde ne peut pas être négatifs",
+     * )
      */
     private $balance;
 

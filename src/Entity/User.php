@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -24,6 +25,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "Cet Email '{{ value }}' n'est pas valide."
+     * )
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $email;
 
@@ -35,41 +42,68 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $city_code;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=1)
+     * @Assert\Choice(
+     *     choices = { "Masculin", "Feminin" },
+     *     message = "Choisir un genre."
+     * )
+     * @Assert\NotBlank (
+     *      message = "Champs vide"
+     * )
      */
     private $sex;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThan("-18 years")
+     * @Assert\NotBlank
      */
     private $birthdate;
 

@@ -109,8 +109,8 @@ class MainController extends AbstractController
      */
      public function mouvement(Request $request, ValidatorInterface $validator): Response
      {
-        $errors = null;
-       // creates a task object and initializes some data for this example
+        $errors = [];
+       // creates a operation object and initializes some data for this example
         $operation = new Operation();
         $form = $this->createForm(MouvementType::class, $operation);
 
@@ -120,22 +120,23 @@ class MainController extends AbstractController
           $operation->setDateTransaction(new \DateTime('now'));
           $errors = $validator->validate($operation);
 
-          if(count($errors) === 0) {
-            // $form->getData() holds the submitted values
-            // but, the original `$operation` variable has also been updated
-            $operation = $form->getData();
-            //on récupère le compte
-            $account = $operation->getAccount();
-            $balance = $account->getBalance();
-            $amount = $operation->getAmount();
+          // $form->getData() holds the submitted values
+          // but, the original `$operation` variable has also been updated
+          $operation = $form->getData();
 
-            if ($operation->getOperationType() === 'Débit') {
-              //on additionne et la mise à jour du solde
-              $amount = (-1) * $amount;
-            }
-            else {
-              $amount;
-            }
+          //on récupère l'objet compte
+          $account = $operation->getAccount();
+          $balance = $account->getBalance();
+          $amount = $operation->getAmount();
+
+          if ($operation->getOperationType() === 'Débit') {
+            $amount = (-1) * $amount;
+          }
+          else {
+            $amount;
+          }
+          if(count($errors) === 0) {
+            //on additionne et la mise à jour du solde
             $account->setBalance($balance + $amount);
             $operation->setAmount($amount);
             $entityManager = $this->getDoctrine()->getManager();
@@ -148,6 +149,7 @@ class MainController extends AbstractController
 
         return $this->render('main/mouvement.html.twig', [
             'form' => $form->createView(),
+            'errors' => $errors,
         ]);
      }
 }
