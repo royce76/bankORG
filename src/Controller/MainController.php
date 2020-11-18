@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Operation;
-use App\Repository\OperationRepository;
 use App\Entity\Account;
 use App\Form\AccountType;
 use App\Form\MouvementType;
-use App\Repository\AccountRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,9 +44,7 @@ class MainController extends AbstractController
         return $this->render('main/single.html.twig', [
             'operations' => $operations,
         ]);
-
     }
-
 
     /**
      * @Route("/account/new", name="app_account_new")
@@ -62,11 +57,10 @@ class MainController extends AbstractController
         $errors = [];
         $user = $this->getUser();
 
+        // opening_date value is define in its entity
         $account->setOpeningDate($account->getOpeningDate());
         $account->setUser($user);
         $form->handleRequest($request);
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $errors = $validator->validate($account->getOpeningDate());
@@ -118,39 +112,56 @@ class MainController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-          $operation->setUser($this->getUser());
-          $operation->setDateTransaction(new \DateTime('now'));
-          $errors = $validator->validate($operation);
+            $operation->setUser($this->getUser());
+            $operation->setDateTransaction(new \DateTime('today'));
+            $errors = $validator->validate($operation);
 
-          // $form->getData() holds the submitted values
-          // but, the original `$operation` variable has also been updated
-          $operation = $form->getData();
+            // $form->getData() holds the submitted values
+            // but, the original `$operation` variable has also been updated
+            $operation = $form->getData();
 
-          //on récupère l'objet compte
-          $account = $operation->getAccount();
-          $balance = $account->getBalance();
-          $amount = $operation->getAmount();
+            //on récupère l'objet compte
+            $account = $operation->getAccount();
+            $balance = $account->getBalance();
+            $amount = $operation->getAmount();
 
-          if ($operation->getOperationType() === 'Débit') {
-            $amount = (-1) * $amount;
-          }
-          else {
-            $amount;
-          }
+            if ($operation->getOperationType() === 'Débit') {
+                $amount = (-1) * $amount;
+            }
+            else {
+                $amount;
+            }
 
-          //on additionne et la mise à jour du solde
-          $account->setBalance($balance + $amount);
-          $operation->setAmount($amount);
+            //on additionne et on fait la mise à jour du solde
+            $account->setBalance($balance + $amount);
+            $operation->setAmount($amount);
 
-          //Si il n'y pas d'erreurs.
-          if(count($errors) === 0) {
-            dump($account);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($operation);
-            $entityManager->persist($account);
-            $entityManager->flush();
-          }
-          return $this->redirectToRoute('app_home');
+            if ($balance + $amount >= 0) {
+              //Si il n'y pas d'erreurs.
+              if(count($errors) === 0) {
+                  $entityManager = $this->getDoctrine()->getManager();
+                  $entityManager->persist($operation);
+                  $entityManager->persist($account);
+                  $entityManager->flush();
+                  $this->addFlash(
+                      'success',
+                      'Opération réalisée.'
+                  );
+                  return $this->redirectToRoute('app_home');
+              }
+              else {
+                  $this->addFlash(
+                      'danger',
+                      'Une erreur s\'est produite, l\'opération est annulée !'
+                  );
+              }
+            }
+            else {
+                $this->addFlash(
+                    'danger',
+                    'Vous n\'avez pas le solde suffisant !'
+                );
+            }
         }
 
         return $this->render('main/mouvement.html.twig', [
