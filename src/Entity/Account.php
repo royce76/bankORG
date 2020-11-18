@@ -85,10 +85,7 @@ class Account
 
     public function getOpeningDate(): ?\DateTimeInterface
     {
-        $date = new \DateTime('now');
-        $dateInterval = new \DateInterval('P2D');
-        $date->sub($dateInterval);
-        $this->opening_date = $date;
+        $this->opening_date = new \DateTime('today');
         return $this->opening_date;
     }
 
