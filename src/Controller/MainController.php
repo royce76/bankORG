@@ -149,7 +149,17 @@ class MainController extends AbstractController
             $entityManager->persist($operation);
             $entityManager->persist($account);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Opération réalisée.'
+            );
           }
+          else {
+            $this->addFlash(
+                'danger',
+                'Une erreur s\'est produite, l\'opération est annulée !'
+            );
+        }
           return $this->redirectToRoute('app_home');
         }
 
