@@ -27,10 +27,14 @@ class OperationRepository extends ServiceEntityRepository
     public function getAccountLastOperation($user_id):array
     {
       $qb = $this->createQueryBuilder('o')
-          ->where('o.user = :id')
-          ->groupBy('o.account')
-          ->orderBy('o.account', 'DESC')
-          ->setParameter('id', $user_id);
+        ->innerJoin("o.user", "u")
+        ->addSelect("u")
+        ->innerJoin("o.account", "a")
+        ->addSelect("a")
+        ->where('o.user = :id')
+        ->groupBy('o.account')
+        ->orderBy('o.account', 'DESC')
+        ->setParameter('id', $user_id);
 
       $query = $qb->getQuery();
       return $query->execute();
@@ -43,9 +47,11 @@ class OperationRepository extends ServiceEntityRepository
     public function getAccountAndOperations($account_id):array
     {
       $qb = $this->createQueryBuilder('o')
-          ->where('o.account = :id')
-          ->orderBy('o.id', 'DESC')
-          ->setParameter('id', $account_id);
+        ->innerJoin("o.account", "a")
+        ->addSelect("a")
+        ->where('o.account = :id')
+        ->orderBy('o.id', 'DESC')
+        ->setParameter('id', $account_id);
 
       $query = $qb->getQuery();
       return $query->execute();

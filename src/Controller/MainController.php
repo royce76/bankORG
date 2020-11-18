@@ -119,7 +119,7 @@ class MainController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $operation->setUser($this->getUser());
-          $operation->setDateTransaction(new \DateTime('now'));
+          $operation->setDateTransaction(new \DateTime('today'));
           $errors = $validator->validate($operation);
 
           // $form->getData() holds the submitted values
