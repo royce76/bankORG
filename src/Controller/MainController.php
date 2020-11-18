@@ -33,6 +33,7 @@ class MainController extends AbstractController
 
         return $this->render('main/index.html.twig', [
             'operations' => $operations,
+            'user' => $user,
         ]);
     }
 
@@ -61,23 +62,26 @@ class MainController extends AbstractController
         $errors = [];
         $user = $this->getUser();
 
+        $account->setOpeningDate($account->getOpeningDate());
+        $account->setUser($user);
         $form->handleRequest($request);
-
+       
+        
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $account->setOpeningDate(new \DateTime());
-            $account->setUser($user);
-
-            $operation->setOperationType('Crédit');
-            $operation->setDateTransaction(new \DateTime());
-            $operation->setComments('Dépôt initial');
-            $operation->setUser($user);
-            $operation->setAccount($account);
-            $operation->setAmount($account->getBalance());
-
-            $errors = $validator->validate($account);
+            $errors = $validator->validate($account->getOpeningDate());
+            $account = $form->getData();
             if(count($errors) === 0) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($account);
+
+                $operation->setOperationType('Crédit');
+                $operation->setDateTransaction(new \DateTime());
+                $operation->setComments('Dépôt initial');
+                $operation->setUser($user);
+                $operation->setAccount($account);
+                $operation->setAmount($account->getBalance());
+
                 $entityManager->persist($operation);
                 $entityManager->flush();
 
@@ -91,7 +95,7 @@ class MainController extends AbstractController
             else {
                 $this->addFlash(
                     'danger',
-                    'Cet compte n\'a pu être créé !'
+                    'Ce compte n\'a pu être créé !'
                 );
             }
         }
