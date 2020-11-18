@@ -31,7 +31,7 @@ class UserFixtures extends Fixture
         $user->setCity('rouen');
         $user->setCityCode('76350');
         $user->setAdress('afpa');
-        $user->setSex('h');
+        $user->setSex('M');
         $user->setBirthdate(new \DateTime('1986-09-19'));
         $user->setIsVerified(TRUE);
         $manager->persist($user);
