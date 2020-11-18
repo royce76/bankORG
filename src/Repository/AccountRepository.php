@@ -24,11 +24,11 @@ class AccountRepository extends ServiceEntityRepository
      */
     public function getAccounts($user_id):array
     {
-      $qb = $this->createQueryBuilder('a')
-          ->where('a.user = :id')
-          ->setParameter('id', $user_id);
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.user = :id')
+            ->setParameter('id', $user_id);
 
-      $query = $qb->getQuery();
-      return $query->execute();
+        $query = $qb->getQuery();
+        return $query->execute();
     }
 }
