@@ -3,28 +3,32 @@
 {% block title %}Ouvrir un compte{% endblock %}
 
 {% block content %}
-    <div class="">
-        <h1>Ouvrir un compte</h1>
+  <div class="row">
+    <div class="col-10 mx-auto my-4">
+      <h2>Ouvrir un compte</h2>
+      {% if errors %}
+      <ul class="alert alert-danger">
+          {% for error in errors %}
+              <li>{{ error.message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
     </div>
-    {% if errors %}
-    <ul class="alert alert-danger">
-        {% for error in errors %}
-            <li>{{ error.message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {{ form_start(accountForm, {'attr': {'novalidate': 'novalidate'}}) }}
-        {{ form_row(accountForm.account_type, {
-            label: 'Type de compte',
-            'attr': {'class': 'form-control'}
-        }) }}
-         {{ form_row(accountForm.balance, {
-            label: 'Montant initial',
-            'attr': {'class': 'form-control'}
-        }) }}
-        {{ form_row(accountForm.save, {
-            label: 'Créer ce compte',
-            'attr': {'class': 'btn btn-dark'}
-        }) }}
-    {{ form_end(accountForm) }}
+    <div class="col-10 mx-auto my-4">
+      {{ form_start(accountForm, {'attr': {'novalidate': 'novalidate'}}) }}
+          {{ form_row(accountForm.account_type, {
+              label: 'Type de compte',
+              'attr': {'class': 'form-control my-2'}
+          }) }}
+           {{ form_row(accountForm.balance, {
+              label: 'Montant initial',
+              'attr': {'class': 'form-control my-2'}
+          }) }}
+          {{ form_row(accountForm.save, {
+              label: 'Créer ce compte',
+              'attr': {'class': 'btn btn-dark my-2'}
+          }) }}
+      {{ form_end(accountForm) }}
+    </div>
+  </div>
 {% endblock %}

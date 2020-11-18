@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="row">
-  <div class="card col-md-10 col-lg-5 mx-auto my-4" style="width: 18rem;">
+  <div class="card col-10 col-md-5 mx-auto my-4" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">{{ operations[0].account.AccountType }}</h5>
     </div>
@@ -15,29 +15,27 @@
     </ul>
     <div class="card-body">
       <a href="{{ path('app_home') }}" class="card-link">Retour</a>
-      <a href="#" class="card-link">Another link</a>
+      <a href="{{ path('app_mouvement') }}" class="card-link">Mouvement</a>
     </div>
   </div>
-  <div class="col-md-10 col-lg-5 mx-auto my-4">
-    <table class="table">
-      <thead>
+  <table class="table col-10 mx-auto my-4">
+    <thead>
+      <tr class="text-center">
+        <th scope="col">Date</th>
+        <th scope="col">Type d'opération</th>
+        <th scope="col">Montant (euro)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for operation in operations %}
         <tr class="text-center">
-          <th scope="col">Date</th>
-          <th scope="col">Type d'opération</th>
-          <th scope="col">Montant (euro)</th>
+          <th scope="row">{{ operation.DateTransaction|date('d/m') }}<br>{{ operation.DateTransaction|date('Y') }}</th>
+          <td>{{ operation.OperationType }}<br>{{ operation.Comments }}</td>
+          <td>{{ operation.Amount }}</td>
         </tr>
-      </thead>
-      <tbody>
-        {% for operation in operations %}
-          <tr class="text-center">
-            <th scope="row">{{ operation.DateTransaction|date('d/m') }}<br>{{ operation.DateTransaction|date('Y') }}</th>
-            <td>{{ operation.OperationType }}<br>{{ operation.Comments }}</td>
-            <td>{{ operation.Amount }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 {% endblock %}

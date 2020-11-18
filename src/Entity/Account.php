@@ -41,7 +41,7 @@ class Account
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
-     * @Assert\GreaterThan (
+     * @Assert\GreaterThanOrEqual (
      *      value = 0,
      *      message = "Solde insuffisant",
      * )

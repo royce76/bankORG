@@ -57,7 +57,7 @@ class MainController extends AbstractController
         $errors = [];
         $user = $this->getUser();
 
-        // opening_date value is define in its entity 
+        // opening_date value is define in its entity
         $account->setOpeningDate($account->getOpeningDate());
         $account->setUser($user);
         $form->handleRequest($request);
@@ -132,29 +132,36 @@ class MainController extends AbstractController
                 $amount;
             }
 
-            //on additionne et la mise à jour du solde
+            //on additionne et on fait la mise à jour du solde
             $account->setBalance($balance + $amount);
             $operation->setAmount($amount);
 
-            //Si il n'y pas d'erreurs.
-            if(count($errors) === 0) {
-                dump($account);
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($operation);
-                $entityManager->persist($account);
-                $entityManager->flush();
-                $this->addFlash(
-                    'success',
-                    'Opération réalisée.'
-                );
+            if ($balance + $amount >= 0) {
+              //Si il n'y pas d'erreurs.
+              if(count($errors) === 0) {
+                  $entityManager = $this->getDoctrine()->getManager();
+                  $entityManager->persist($operation);
+                  $entityManager->persist($account);
+                  $entityManager->flush();
+                  $this->addFlash(
+                      'success',
+                      'Opération réalisée.'
+                  );
+                  return $this->redirectToRoute('app_home');
+              }
+              else {
+                  $this->addFlash(
+                      'danger',
+                      'Une erreur s\'est produite, l\'opération est annulée !'
+                  );
+              }
             }
             else {
                 $this->addFlash(
                     'danger',
-                    'Une erreur s\'est produite, l\'opération est annulée !'
+                    'Vous n\'avez pas le solde suffisant !'
                 );
             }
-            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('main/mouvement.html.twig', [
