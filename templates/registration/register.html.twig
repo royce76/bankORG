@@ -3,45 +3,56 @@
 {% block title %}S'inscrire{% endblock %}
 
 {% block content %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
 
-    <div class="page-title my-3">
-        <h1>S'inscrire</h1>
-    </div>
-    <div class="container">
-        {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
-            {{ form_row(registrationForm.lastname, {
-                label: 'Nom'
-            }) }}
-            {{ form_row(registrationForm.firstname, {
-                label: 'Prénom'
-            }) }}
-            {{ form_row(registrationForm.adress, {
-                label: 'Adresse'
-            }) }}
-            {{ form_row(registrationForm.city_code, {
-                label: 'Code postal'
-            }) }}
-            {{ form_row(registrationForm.city, {
-                label: 'Ville'
-            }) }}
-            {{ form_row(registrationForm.sex, {
-                label: 'Genre'
-            }) }}
-            {{ form_row(registrationForm.birthdate, {
-                label: 'Date de naissance'
-            }) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.plainPassword, {
-                label: 'Mot de passe'
-            }) }}
-            {{ form_row(registrationForm.agreeTerms, {
-                label: 'Accepter les conditions'
-            }) }}
 
-            <button type="submit" class="btn btn-dark text-white">S'inscrire</button>
-        {{ form_end(registrationForm) }}
+    <div class="row">
+      <div class="col-10 mx-auto page-title my-4">
+
+          {% for error in errors %}
+            <div class="alert-danger">
+              {{ error.message }}
+            </div>
+          {% endfor %}
+
+          {% for flashError in app.flashes('verify_email_error') %}
+              <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+          {% endfor %}
+
+          <h2>S'inscrire</h2>
+      </div>
+      <div class="col-10 mx-auto my-4">
+          {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+              {{ form_row(registrationForm.lastname, {
+                  label: 'Nom'
+              }) }}
+              {{ form_row(registrationForm.firstname, {
+                  label: 'Prénom'
+              }) }}
+              {{ form_row(registrationForm.adress, {
+                  label: 'Adresse'
+              }) }}
+              {{ form_row(registrationForm.city_code, {
+                  label: 'Code postal'
+              }) }}
+              {{ form_row(registrationForm.city, {
+                  label: 'Ville'
+              }) }}
+              {{ form_row(registrationForm.sex, {
+                  label: 'Genre'
+              }) }}
+              {{ form_row(registrationForm.birthdate, {
+                  label: 'Date de naissance'
+              }) }}
+              {{ form_row(registrationForm.email) }}
+              {{ form_row(registrationForm.plainPassword, {
+                  label: 'Mot de passe'
+              }) }}
+              {{ form_row(registrationForm.agreeTerms, {
+                  label: 'Accepter les conditions'
+              }) }}
+
+              <button type="submit" class="btn btn-dark text-white">S'inscrire</button>
+          {{ form_end(registrationForm) }}
+      </div>
     </div>
 {% endblock %}

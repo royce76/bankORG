@@ -140,6 +140,7 @@ class MainController extends AbstractController
 
           //Si il n'y pas d'erreurs.
           if(count($errors) === 0) {
+            dump($account);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($operation);
             $entityManager->persist($account);

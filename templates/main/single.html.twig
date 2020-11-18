@@ -4,14 +4,8 @@
 
 {% block content %}
 
-  {# Depuis la méthode verifyUserEmail de RegistrationController, je chope le message de succès. #}
-  {% for message in app.flashes('success') %}
-      <div class="alert alert-success" role="alert">{{ message }}</div>
-  {% endfor %}
-
-
 <div class="row">
-  <div class="card col-5 mx-auto my-4" style="width: 18rem;">
+  <div class="card col-md-10 col-lg-5 mx-auto my-4" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">{{ operations[0].account.AccountType }}</h5>
     </div>
@@ -24,26 +18,26 @@
       <a href="#" class="card-link">Another link</a>
     </div>
   </div>
-  <table class="table col-5 mx-auto my-4 text-center">
-    <thead>
-      <tr>
-        <th scope="col">Date de transaction</th>
-        <th scope="col">Type d'opération</th>
-        <th scope="col">Justificatif</th>
-        <th scope="col">Montant (euro)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for operation in operations %}
-        <tr>
-          <th scope="row">{{ operation.DateTransaction|date('m/d/Y') }}</th>
-          <td>{{ operation.OperationType }}</td>
-          <td>{{ operation.Comments }}</td>
-          <td>{{ operation.Amount }}</td>
+  <div class="col-md-10 col-lg-5 mx-auto my-4">
+    <table class="table">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">Date</th>
+          <th scope="col">Type d'opération</th>
+          <th scope="col">Montant (euro)</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for operation in operations %}
+          <tr class="text-center">
+            <th scope="row">{{ operation.DateTransaction|date('d/m') }}<br>{{ operation.DateTransaction|date('Y') }}</th>
+            <td>{{ operation.OperationType }}<br>{{ operation.Comments }}</td>
+            <td>{{ operation.Amount }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 {% endblock %}
