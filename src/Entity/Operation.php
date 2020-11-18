@@ -23,7 +23,6 @@ class Operation
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
-     * @Assert\Choice(callback="getOperationGenre", message = "Opération non reconnu")
      */
     private $operation_type;
 
@@ -53,7 +52,7 @@ class Operation
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\LessThanOrEqual("today UTC")
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     private $date_transaction;
 
@@ -149,10 +148,5 @@ class Operation
         $this->user = $user;
 
         return $this;
-    }
-
-    public static function getOperationGenre()
-    {
-        return ['Débit', 'Crédit'];
     }
 }

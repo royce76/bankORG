@@ -108,10 +108,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=1)
-     * @Assert\Choice(
-     *     choices = { "M", "F" },
-     *     message = "Choisir un genre."
-     * )
+     * @Assert\Choice(callback="getGenre", message = "Opération non reconnu", groups={"genre"})
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
@@ -120,7 +117,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\LessThan("-18 years")
+     * @Assert\LessThan("-18 years", message= "Appelle tes parents")
      * @Assert\NotBlank
      */
     private $birthdate;
@@ -378,5 +375,10 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public static function getGenre()
+    {
+        return ['M', 'F'];
     }
 }
