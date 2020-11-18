@@ -18,7 +18,7 @@
           <h5 class="card-title">{{ operation.account.AccountType }}</h5>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Ouvert le {{ operation.account.OpeningDate|date('m/d/Y') }}</li>
+          <li class="list-group-item">Ouvert le {{ operation.account.OpeningDate|date('d/m/Y') }}</li>
           <li class="list-group-item">Solde actuel : {{ operation.account.Balance }} euro</li>
         </ul>
         <div class="card-body">
@@ -37,7 +37,7 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">{{ operation.DateTransaction|date('m/d/Y') }}</th>
+            <th scope="row">{{ operation.DateTransaction|date('d/m/Y') }}</th>
             <td>{{ operation.OperationType }}</td>
             <td>{{ operation.Comments }}</td>
             <td>{{ operation.Amount }}</td>

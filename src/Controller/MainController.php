@@ -65,9 +65,9 @@ class MainController extends AbstractController
         $account->setOpeningDate($account->getOpeningDate());
         $account->setUser($user);
         $form->handleRequest($request);
-       
-        
-        
+
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $errors = $validator->validate($account->getOpeningDate());
             $account = $form->getData();

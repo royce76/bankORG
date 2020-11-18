@@ -7,12 +7,13 @@
     <div class="row">
       <div class="col-10 mx-auto my-4">
         <h2>Changer de mot de passe</h2>
+        {# flash si la requête n'a pas été validé par l'utilisateur #}
+        {% for flashError in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
       </div>
     </div>
-    {# flash si la requête n'a pas été validé par l'utilisateur #}
-    {% for flashError in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+
 
     {{ form_start(requestForm) }}
         <div class="row">

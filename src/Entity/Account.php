@@ -33,7 +33,7 @@ class Account
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
-     * @Assert\LessThanOrEqual("today UTC", message = "Votre date d'ouverture est incorrecte")
+     * @Assert\GreaterThanOrEqual("today", message = "Votre date d'ouverture est incorrecte")
      */
     private $opening_date;
 
@@ -44,7 +44,7 @@ class Account
      * )
      * @Assert\GreaterThan (
      *      value = 0,
-     *      message = "Solde insuffisants",
+     *      message = "Solde insuffisant",
      * )
      */
     private $balance;
