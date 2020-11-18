@@ -52,7 +52,7 @@ class Operation
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\GreaterThanOrEqual("today")
+     * @Assert\LessThanOrEqual("today")
      */
     private $date_transaction;
 
