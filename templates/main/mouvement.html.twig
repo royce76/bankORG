@@ -19,7 +19,6 @@
         </div>
       </div>
     {% endfor %}
-<<<<<<< HEAD
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
       <div class="my-4">
@@ -50,40 +49,6 @@
         {{ form_row(form.submit, {
         'label': 'Enregistrer'
         }) }}
-=======
-    <div class="row">
-      <div class="col-10 mx-auto">
-        <div class="my-4">
-            {{ form_row(form.account, {
-                label: 'Votre compte',
-                'attr': {'class': 'form-control'}
-            }) }}
-        </div>
-        <div class="my-4">
-            {{ form_row(form.operation_type, {
-                label: 'Débit ou Crédit',
-                'attr': {'class': 'form-control'}
-            }) }}
-        </div>
-        <div class="my-4">
-            {{ form_row(form.amount, {
-                label: 'Montant',
-                'attr': {'class': 'form-control'}
-            }) }}
-        </div>
-        <div class="my-4">
-            {{ form_row(form.comments, {
-                label: 'Justificatif obligatoire',
-                'attr': {'class': 'form-control'}
-            }) }}
-        </div>
-        <div class="my-4">
-          {{ form_row(form.submit, {
-            'label': 'Enregistrer',
-            'attr': {'class': 'btn btn-dark'}
-          }) }}
-        </div>
->>>>>>> dev
       </div>
     {{ form_end(form) }}
   </div>

@@ -12,19 +12,17 @@
         </div>
     {% endfor %}
 
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            Bienvenue {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
-        </div>
-    {% endif %}
-
     <div class="row my-4">
       <div class="col-10 mx-auto">
         <h2 class="h3 mb-3 font-weight-normal">Connexion</h2>
+          {% if app.user %}
+              <div class="mb-3">
+                  Bienvenue {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+              </div>
+          {% endif %}
+          {% if error %}
+              <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+          {% endif %}
         <div class="mt-5">
             <div class="alert alert-info">
                 Pas encore de compte : <a href="{{ path('app_register') }}" class="btn btn-dark mx-2">S'enregistrer</a>

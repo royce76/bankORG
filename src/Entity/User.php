@@ -76,7 +76,7 @@ class User implements UserInterface
      *      message = "Champs vide"
      * )
      * @Assert\Regex(
-     *     pattern="/^[[:alpha:]]([-' ]?[[:alpha:]])*$/",
+     *     pattern="/(^[a-zA-ZÀ-ú\-\s])+/",
      *     message="Saisie incorrect, exemple:Maison-Alfort"
      * )
      */
@@ -108,7 +108,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=1)
-     * @Assert\Choice(callback="getGenre", message = "Opération non reconnu", groups={"genre"})
      * @Assert\NotBlank (
      *      message = "Champs vide"
      * )
@@ -375,10 +374,5 @@ class User implements UserInterface
         }
 
         return $this;
-    }
-
-    public static function getGenre()
-    {
-        return ['M', 'F'];
     }
 }
