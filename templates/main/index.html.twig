@@ -1,0 +1,50 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+  {# Depuis la méthode verifyUserEmail de RegistrationController, je chope le message de succès. #}
+  {% for message in app.flashes('success') %}
+      <div class="alert alert-success" role="alert">{{ message }}</div>
+  {% endfor %}
+  <div class="welcome">
+    <p>Bonjour {{user.firstName }} {{user.lastName }}</p>
+  </div>
+  {% for operation in operations %}
+    <div class="row">
+      <div class="card col-5 mx-auto my-4" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ operation.account.AccountType }}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Ouvert le {{ operation.account.OpeningDate|date('d/m/Y') }}</li>
+          <li class="list-group-item">Solde actuel : {{ operation.account.Balance }} euro</li>
+        </ul>
+        <div class="card-body">
+          <a href="{{ path('app_account', {id:operation.account.id})}}" class="card-link">Gérer</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+      </div>
+      <table class="table col-5 mx-auto my-4 text-center">
+        <thead>
+          <tr>
+            <th scope="col">Date de transaction</th>
+            <th scope="col">Type d'opération</th>
+            <th scope="col">Justificatif</th>
+            <th scope="col">Montant (euro)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{ operation.DateTransaction|date('d/m/Y') }}</th>
+            <td>{{ operation.OperationType }}</td>
+            <td>{{ operation.Comments }}</td>
+            <td>{{ operation.Amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+
+{% endblock %}

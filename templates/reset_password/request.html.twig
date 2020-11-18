@@ -1,0 +1,36 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Changer de mot de passe{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="col-10 mx-auto my-4">
+        <h2>Changer de mot de passe</h2>
+        {# flash si la requête n'a pas été validé par l'utilisateur #}
+        {% for flashError in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
+      </div>
+    </div>
+
+
+    {{ form_start(requestForm) }}
+        <div class="row">
+          <div class="col-10 mx-auto">
+            <div class="my-4">
+              {{ form_row(requestForm.email,{
+                  label: 'Entrez votre Email',
+                  'attr': {'class': 'form-control'}
+              }) }}
+              <small>
+                  Entrer votre adresse mail et nous vous enverrons un lien pour changer votre mot de passe.
+              </small>
+            </div>
+            <div class="my-4">
+              <button type="submit" class="btn btn-dark">Envoyer l'adresse mail</button>
+            </div>
+          </div>
+        </div>
+    {{ form_end(requestForm) }}
+{% endblock %}
