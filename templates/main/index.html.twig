@@ -19,18 +19,18 @@
       {% for operation in operations %}
       <div class="card col-10 col-md-5 mx-auto my-4" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">{{ operation.account.AccountType }}</h5>
+          <h5 class="card-title">{{ operation['account_type'] }}</h5>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Ouvert le {{ operation.account.OpeningDate|date('d/m/Y') }}</li>
-          <li class="list-group-item">Solde actuel : {{ operation.account.Balance }} euro</li>
-          <li class="list-group-item">Dernière transaction le {{ operation.DateTransaction|date('d/m/Y') }}</li>
-          <li class="list-group-item">Type : {{ operation.OperationType }}</li>
-          <li class="list-group-item">Justificatif : {{ operation.Comments }}</li>
-          <li class="list-group-item">Montant : {{ operation.Amount }}</li>
+          <li class="list-group-item">Ouvert le {{ operation['opening_date']|date('d/m/Y') }}</li>
+          <li class="list-group-item">Solde actuel : {{ operation['balance'] }} euro</li>
+          <li class="list-group-item">Dernière transaction le {{ operation['date_transaction']|date('d/m/Y') }}</li>
+          <li class="list-group-item">Type : {{ operation['operation_type'] }}</li>
+          <li class="list-group-item">Justificatif : {{ operation['comments'] }}</li>
+          <li class="list-group-item">Montant : {{ operation['amount'] }}</li>
         </ul>
         <div class="card-body">
-          <a href="{{ path('app_account', {id:operation.account.id})}}" class="card-link">Gérer</a>
+          <a href="{{ path('app_account', {id:operation['id']})}}" class="card-link">Gérer</a>
         </div>
       </div>
       {% endfor %}
