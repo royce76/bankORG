@@ -26,8 +26,8 @@ class MainController extends AbstractController
     {
         $user = $this->getUser();
 
-        $operations = $this->getDoctrine()->getRepository(Operation::class)->getAccountLastOperation($user->getId());
-
+        $operations = $this->getDoctrine()->getRepository(Account::class)->getAccounts($user->getId());
+        dump($operations);
         return $this->render('main/index.html.twig', [
             'operations' => $operations,
             'user' => $user,
