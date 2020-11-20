@@ -26,10 +26,6 @@ class OperationRepository extends ServiceEntityRepository
     public function getAccountLastOperation($user_id):array
     {
       $qb = $this->createQueryBuilder('o')
-        ->innerJoin("o.user", "u")
-        ->addSelect("u")
-        ->innerJoin("o.account", "a")
-        ->addSelect("a")
         ->where('o.user = :id')
         ->groupBy('o.account')
         ->orderBy('o.account', 'DESC')
